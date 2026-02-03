@@ -9,12 +9,18 @@ var step3Fraction;
 var step4;
 
 
+
 function newQuestion() {
     // 32 random bits
     //const bits = Array.from({length: 32}, () => Math.floor(Math.random() * 2));
-    const bits = [1, 1,0,0,0, 0,0,1,1, 0,0,0,1, 1,0,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0];
-
-
+    //const bits = [1,  1,0,0,0, 0,0,1,1,  0,0,0,1, 1,0,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0];
+    
+    const signBit = [Math.floor(Math.random() * 2)];
+    const exponentValue = 127 + Math.floor(Math.random() * 5) - 2; // bias + [-2,2]
+    const exponentBits = exponentValue.toString(2).padStart(8, '0').split('').map(Number);
+    const fractionBits = generateArray(23, 3);
+    const bits = signBit.concat(exponentBits).concat(fractionBits);
+    
     // Get the correct answer for each step
 
     // Step 4
@@ -27,19 +33,26 @@ function newQuestion() {
 
     // Step 2
     // Subtract 127 bias from exponent
-    const unbiasedExponent = (parseInt(step3Exponent.join(''), 2)-127) + 1; // +1 for off-by-one indexing error
+    const unbiasedExponent = (parseInt(step3Exponent.join(''), 2)-127); 
 
     // Add leading 1 back to start
     var fullFraction = [1].concat(step3Fraction);
     // Insert "." to fraction at index exponent
     //const step2 = fullFraction;
-    step2 = fullFraction.toSpliced(unbiasedExponent, 0, ".");
+
+    step2 = fullFraction.toSpliced(unbiasedExponent+1, 0, ".");
 
 
     // Step 1
     // Split on the "."
-    step1Integer = step2.slice(0, unbiasedExponent);
-    step1Fraction = step2.slice(unbiasedExponent+1);
+    if (unbiasedExponent >= 0) {
+        step1Integer = fullFraction.slice(0, unbiasedExponent+1);
+        step1Fraction = fullFraction.slice(unbiasedExponent+1);
+    } else {
+        // For negative exponent, integer part = 0, fraction has leading zeros
+        step1Integer = [0];
+        step1Fraction = new Array(-unbiasedExponent-1).fill(0).concat(fullFraction);
+    }
 
 
     // Convert arrays to strings
@@ -57,7 +70,9 @@ function newQuestion() {
     fractionDecimal = Number(fractionDecimal); 
 
     let integerDecimal = parseInt(step1Integer, 2);
-    let answerDecimal = integerDecimal + fractionDecimal;
+    if (integerDecimal == "") integerDecimal = "0"; 
+
+    let answerDecimal = String(integerDecimal) + String(fractionDecimal).slice(1);
 
     // Negative
     if (step3Sign == 1) answerDecimal *= -1;
@@ -122,6 +137,22 @@ function compareInputWithAnswer(input, answer) {
 
     result = (input == answer);
     return result;
+}
+
+function generateArray(n, k) {
+  const arr = [];
+  
+  // First k elements: random 0 or 1
+  for (let i = 0; i < k; i++) {
+    arr.push(Math.floor(Math.random() * 2));
+  }
+  
+  // Remaining elements: 0
+  for (let i = k; i < n; i++) {
+    arr.push(0);
+  }
+  
+  return arr;
 }
 
 // Start first question
