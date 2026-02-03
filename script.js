@@ -1,0 +1,128 @@
+
+// Correct answers for each field
+var step1Integer;
+var step1Fraction;
+var step2;
+var step3Sign;
+var step3Exponent;
+var step3Fraction;
+var step4;
+
+
+function newQuestion() {
+    // 32 random bits
+    //const bits = Array.from({length: 32}, () => Math.floor(Math.random() * 2));
+    const bits = [1, 1,0,0,0, 0,0,1,1, 0,0,0,1, 1,0,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0];
+
+
+    // Get the correct answer for each step
+
+    // Step 4
+    step4 = bits;  
+    
+    // Step 3
+    step3Sign = bits[0];
+    step3Exponent = bits.slice(1, 9);
+    step3Fraction = bits.slice(9);
+
+    // Step 2
+    // Subtract 127 bias from exponent
+    const unbiasedExponent = (parseInt(step3Exponent.join(''), 2)-127) + 1; // +1 for off-by-one indexing error
+
+    // Add leading 1 back to start
+    var fullFraction = [1].concat(step3Fraction);
+    // Insert "." to fraction at index exponent
+    //const step2 = fullFraction;
+    step2 = fullFraction.toSpliced(unbiasedExponent, 0, ".");
+
+
+    // Step 1
+    // Split on the "."
+    step1Integer = step2.slice(0, unbiasedExponent);
+    step1Fraction = step2.slice(unbiasedExponent+1);
+
+
+    // Convert arrays to strings
+    step1Integer = step1Integer.join('');
+    step1Fraction = step1Fraction.join('');
+    step2 = step2.join('');
+    step3Sign = String(step3Sign);
+    step3Exponent = step3Exponent.join('');
+    step3Fraction = step3Fraction.join('');
+    step4 = step4.join('');
+
+
+    // Get decimal answer
+    let fractionDecimal = step1Fraction.split('').reduce((sum, digit, i) => sum + digit * 2 ** -(i + 1), 0);  // cursed af but it works
+    fractionDecimal = Number(fractionDecimal); 
+
+    let integerDecimal = parseInt(step1Integer, 2);
+    let answerDecimal = integerDecimal + fractionDecimal;
+
+    // Negative
+    if (step3Sign == 1) answerDecimal *= -1;
+
+    // Display
+    document.getElementById("decimal").textContent = answerDecimal;
+
+    console.log("Bits:")
+    console.log(bits);
+    console.log("Step 4");
+    console.log(step4);
+    console.log("Step 3");
+    console.log(step3Sign);
+    console.log(step3Exponent);
+    console.log(step3Fraction);
+    console.log("Step 2");
+    console.log(step2);
+    console.log("Step 1");
+    console.log(step1Integer, step1Fraction);
+    console.log("Answer");
+    console.log(answerDecimal);
+
+}
+
+function checkAnswers() {
+    // These are the entire object, the .value attribute contains the answer
+    checkAnswer("step1Integer", step1Integer);
+    checkAnswer("step1Fraction", step1Fraction);
+
+    checkAnswer("step2", step2);
+
+    checkAnswer("step3Sign", step3Sign);  // TODO - ("" == 0) is True
+    checkAnswer("step3Exponent", step3Exponent);
+    checkAnswer("step3Fraction", step3Fraction);
+
+    checkAnswer("step4", step4);
+
+}
+
+function checkAnswer(userInputID, correctInput) {
+    // These are the entire object, the .value attribute contains the answer
+    let userInput = document.getElementById(userInputID);
+
+    let isCorrect = compareInputWithAnswer(userInput.value, correctInput);
+
+    // Replace .neutral or .incorrect with .correct, whatever exists
+    if (isCorrect) userInput.classList.replace("neutral", "correct") || userInput.classList.replace("incorrect", "correct");
+    // Replace with .incorrect
+    else userInput.classList.replace("neutral", "incorrect") || userInput.classList.replace("correct", "incorrect");
+
+}
+
+function compareInputWithAnswer(input, answer) {
+    if (input == '') return false;
+
+    // Remove spaces
+    input = input.replace(/\s+/g, '');  
+
+    // Remove trailing 0's
+    if (input.length != 1) input = input.replace(/0+$/g, '');  // != 1 because "0" for sign bit gets trimmed
+    if (answer.length != 1)answer = answer.replace(/0+$/g, '');
+
+    result = (input == answer);
+    return result;
+}
+
+// Start first question
+newQuestion();

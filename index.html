@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Base Conversion Practice</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <div class="card">
+        <h1>Decimal → IEEE-754 Practice</h1>
+
+        <h2 id="decimal"></h3>
+   
+        <h4>Seperate integer and fraction - convert to binary</h4>
+        <input class="userInput neutral" id="step1Integer"   placeholder="Integer Binary"/>
+        <input class="userInput neutral" id="step1Fraction" placeholder="Fraction Binary"/>
+
+        <h4>Combine integer and fraction binary</h4>
+        <input class="userInput neutral" id="step2" placeholder="{Integer Binary}.{Fraction Binary}"/>
+
+        <h4>Get sign bit, exponent and normalised fraction</h4>
+        <input class="userInput neutral" id="step3Sign" placeholder="Sign Bit"/>
+        <input class="userInput neutral" id="step3Exponent" placeholder="Exponent (with +127 bias added)"/>
+        <input class="userInput neutral" id="step3Fraction" placeholder="Normalised Fraction (with leading 1 removed)"/>
+
+        <h4>Combine components - 1 bit float, 8 bit exponent, 23 bit fraction </h4>
+        <input class="userInput neutral" id="step4" placeholder="S EEEE EEEE FFFF FFFF FFFF FFFF FFFF FFF"/>
+
+
+        <button onclick="checkAnswers()">Check</button>
+        <button onclick="newQuestion()">New Number</button>
+    </div>
+
+<script src="script.js"></script>
+</body>
+
+<footer>
+    <div class="footer-item">Thomas Prowse, 2026</div>
+    <a href="https://github.com/SardineMilk">Github</a>
+</footer>
+
+</html>
