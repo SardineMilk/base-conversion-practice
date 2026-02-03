@@ -11,6 +11,17 @@ var step4;
 
 
 function newQuestion() {
+
+    // Clear input boxes
+    clearInputBox("step1Integer", '');
+    clearInputBox("step1Fraction", '');
+    clearInputBox("step2", '');
+    clearInputBox("step3Sign", ''); 
+    clearInputBox("step3Exponent", '');
+    clearInputBox("step3Fraction", '');
+    clearInputBox("step4", '');
+
+
     // 32 random bits
     //const bits = Array.from({length: 32}, () => Math.floor(Math.random() * 2));
     //const bits = [1,  1,0,0,0, 0,0,1,1,  0,0,0,1, 1,0,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0];
@@ -104,12 +115,38 @@ function checkAnswers() {
 
     checkAnswer("step2", step2);
 
-    checkAnswer("step3Sign", step3Sign);  // TODO - ("" == 0) is True
+    checkAnswer("step3Sign", step3Sign);
     checkAnswer("step3Exponent", step3Exponent);
     checkAnswer("step3Fraction", step3Fraction);
 
     checkAnswer("step4", step4);
 
+}
+
+function showAnswers() {
+    checkAnswers();
+
+    setInputBox("step1Integer", step1Integer);
+    setInputBox("step1Fraction", step1Fraction);
+
+    setInputBox("step2", step2);
+
+    setInputBox("step3Sign", step3Sign); 
+    setInputBox("step3Exponent", step3Exponent);
+    setInputBox("step3Fraction", step3Fraction);
+
+    setInputBox("step4", step4);
+
+}
+
+function setInputBox(element, value) {
+    document.getElementById(element).value = value;
+}
+
+function clearInputBox(element, value) {
+    let object = document.getElementById(element);
+    object.value = value;
+    object.classList.replace("correct", "neutral") || object.classList.replace("incorrect", "neutral")
 }
 
 function checkAnswer(userInputID, correctInput) {
