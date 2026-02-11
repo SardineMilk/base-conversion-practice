@@ -1,83 +1,85 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #0F172A;
-    text-align: center;
-    padding-top: 40px;
-
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  text-align: center;
+  padding-top: 40px;
 }
 
 h1 {
-    color: #F1F5F9;
+  color: #f1f5f9;
 }
 
 h2 {
-    color: #38BDF8;
+  color: #38bdf8;
 }
 
 h3 {
-    color: #94A3B8;
+  color: #94a3b8;
 }
 
 h4 {
-    color: #94A3B8;
-    margin-bottom: 2px;
-    margin-left: 20px; 
-    text-align: left;
+  color: #94a3b8;
+  margin-bottom: 2px;
+  margin-left: 20px;
+  text-align: left;
 }
-
-.footer-item {
-    color: #F1F5F9;
-}
-
 
 footer {
-    display: flex; 
-    justify-content: space-around;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    background: #1E293B;
-    padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: #1e293b;
+  padding: 15px;
+}
+.footer-item {
+  color: #f1f5f9;
 }
 
+.footer-github-link {
+  display: flex;
+  gap: 4px;
+  text-decoration: none;
+  color: #f1f5f9;
+  align-items: center;
+}
 .card {
-    background: #1E293B;
-    padding: 20px;
-    max-width: 600px;
-    margin: auto;
-    border-radius: 8px;
-    box-shadow: 0 0 10px #0F172A;
+  background: #1e293b;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #0f172a;
 }
 
 input {
-    width: 90%;
-    padding: 10px;
-    margin-top: 10px;
-    font-family: monospace;
-    font-size: 14px;
+  width: 90%;
+  padding: 10px;
+  margin-top: 10px;
+  font-family: monospace;
+  font-size: 14px;
 }
 
 button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background: #38BDF8;
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #38bdf8;
 }
 
-
-
 .neutral {
-    background-color: #F1F5F9;
+  background-color: #f1f5f9;
 }
 
 .correct {
-    background-color: #10B981;
+  background-color: #10b981;
 }
 
 .incorrect {
-    background-color: #EF4444;
+  background-color: #ef4444;
 }
