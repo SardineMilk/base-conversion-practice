@@ -81,3 +81,13 @@ button {
 .incorrect {
     background-color: #EF4444;
 }
+
+.footer-link {
+    font-family: Arial, sans-serif;
+    color: #38BDF8;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
